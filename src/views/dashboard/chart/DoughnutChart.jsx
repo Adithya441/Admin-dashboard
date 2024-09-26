@@ -18,6 +18,8 @@ import 'primeicons/primeicons.css';
 import { useUser } from 'contexts/context';
 import { exportDataToCSV } from 'Download/Csv';
 import { exportDataToExcel } from 'Download/Excel';
+import { convert } from 'Download/PDF';
+import { convertDataToPDF } from 'Download/data_to_pdf';
 
 // Register the necessary components for Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
@@ -85,7 +87,7 @@ const DonutChartWithModal = () => {
         const title = selectedData[0]?.label; // Check for selected data
         switch (format) {
             case 'pdf':
-                // Implement PDF export logic
+                convertDataToPDF(selectedData, title);
                 break;
             case 'csv':
                 exportDataToCSV(selectedData, title);
@@ -158,7 +160,7 @@ const DonutChartWithModal = () => {
                 </Modal.Header>
                 <Modal.Body>
                     {selectedData.length > 0 && (
-                        <DataTable value={selectedData} sortMode="multiple">
+                        <DataTable value={selectedData} sortMode="multiple" id='table'>
                             <Column field='label' header='Status' sortable></Column>
                             <Column field='value' header='Count' sortable></Column>
                         </DataTable>

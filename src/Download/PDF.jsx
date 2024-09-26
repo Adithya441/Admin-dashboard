@@ -9,7 +9,7 @@ export const convert = (title) => {
 
     // Add the title
     pdf.setFontSize(16); // Set the font size of the title
-    pdf.text(`${title}`, 10, 20); // Add title at position (x: 10, y: 20)
+    pdf.text(`${title} Meters`, 10, 20); // Add title at position (x: 10, y: 20)
 
     // Add the image
     pdf.addImage(imgData, 'PNG', 10, 30, 200, 150); // Adjust y position to fit below the title
