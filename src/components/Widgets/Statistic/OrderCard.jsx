@@ -11,17 +11,21 @@ const OrderCard = ({ params }) => {
     cardClass = [...cardClass, params.class];
   }
 
-  let iconClass = ['float-start'];
-  if (params.icon) {
-    iconClass = [...iconClass, params.icon];
-  }
+  // let iconClass = ['float-start'];
+  // if (params.icon) {
+  //   iconClass = [...iconClass, params.icon];
+  // }
 
   return (
     <Card className={cardClass.join(' ')}>
       <Card.Body>
         <h6 className="text-white">{params.title}</h6>
         <h2 className="text-end text-white">
-          <i className={iconClass.join(' ')} />
+        <img 
+            src={params.icon} 
+            alt="Icon" 
+            className="order-card-icon float-start" style={{width:'35px',height:'35px',marginTop:'5px'}} // Adding a class for styling
+          />
           <span>{params.primaryText}</span>
         </h2>
         <p className="mb-0">

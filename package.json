@@ -1,13 +1,16 @@
 {
   "name": "gradient-able-free-react-admin-template",
   "version": "5.0.0",
+  "homepage": "https://github.com/Adithya441/Admin-dashboard.git",
   "scripts": {
     "start": "vite",
     "build": "node --max-old-space-size=4096 node_modules/vite/bin/vite.js build",
     "preview": "vite preview",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
-    "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
+    "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@tanem/react-nprogress": "^5.0.51",

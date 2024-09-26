@@ -12,6 +12,8 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 // project import
 import OrderCard from '../../components/Widgets/Statistic/OrderCard';
 import SocialCard from '../../components/Widgets/Statistic/SocialCard';
+import meter from '../../assets/images/meter.png'
+import { ImMeter2 } from "react-icons/im";
 
 // import customerChart from './chart/analytics-cuatomer-chart';
 import customerChart1 from './chart/analytics-cuatomer-chart-1';
@@ -129,7 +131,7 @@ const DashAnalytics = () => {
             params={{
               title: 'Meter Count',
               class: 'bg-c-blue',
-              icon: 'feather icon-shopping-cart',
+              icon: meter,
               primaryText: `${datao}`
             }}
           />
@@ -139,7 +141,7 @@ const DashAnalytics = () => {
             params={{
               title: 'Active Meters',
               class: 'bg-c-green',
-              icon: 'feather icon-tag',
+              icon: meter,
               primaryText: `${dataa}`
             }}
           />
@@ -149,7 +151,7 @@ const DashAnalytics = () => {
             params={{
               title: 'De-Active Meters',
               class: 'bg-c-yellow',
-              icon: 'feather icon-repeat',
+              icon: meter,
               primaryText: `${datab}`
             }}
           />
@@ -159,7 +161,7 @@ const DashAnalytics = () => {
             params={{
               title: 'Today Active',
               class: 'bg-c-red',
-              icon: 'feather icon-award',
+              icon: meter,
               primaryText: `${datac}`
             }}
           />
