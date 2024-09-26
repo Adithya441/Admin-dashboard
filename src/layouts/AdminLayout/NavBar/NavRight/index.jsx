@@ -1,5 +1,6 @@
 import React, { useState , useContext} from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // react-bootstrap
 import { ListGroup, Dropdown, Card } from 'react-bootstrap';
@@ -9,20 +10,23 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 
 // project import
 import ChatList from './ChatList';
-import { UserContext } from '../../../../contexts/context';
+import { useUser } from '../../../../contexts/context';
 
 // assets
 import avatar1 from '../../../../assets/images/user/avatar-1.jpg';
 import avatar2 from '../../../../assets/images/user/avatar-2.jpg';
 import avatar3 from '../../../../assets/images/user/avatar-3.jpg';
 import avatar4 from '../../../../assets/images/user/avatar-4.jpg';
+import { BASE_URL } from 'config/constant';
 
 // ==============================|| NAV RIGHT ||============================== //
 
 const NavRight = () => {
-  const { username } = useContext(UserContext);
   const [listOpen, setListOpen] = useState(false);
-
+  const navigate = useNavigate();
+  const username = localStorage.getItem('username');
+  const link = localStorage.getItem('link');
+  console.log(link);
   const notiData = [
     {
       name: 'Joseph William',
@@ -43,6 +47,10 @@ const NavRight = () => {
       activity: 'yesterday'
     }
   ];
+
+  const handleLogout = () => {
+    navigate('/auth/signin-1', { replace: true });
+  };
 
   return (
     <React.Fragment>
@@ -77,7 +85,7 @@ const NavRight = () => {
                       className="d-flex align-items-center shadow-none mb-0 p-0"
                       style={{ flexDirection: 'row', backgroundColor: 'unset' }}
                     >
-                      <img className="img-radius" src={avatar1} alt="Generic placeholder" />
+                      <img className="img-radius" src={link} alt="Generic placeholder" />
                       <Card.Body className="p-0">
                         <p>
                           <strong>xyz</strong>
@@ -136,11 +144,11 @@ const NavRight = () => {
         <ListGroup.Item as="li" bsPrefix=" ">
           <Dropdown align="end" className="drp-user">
             <Dropdown.Toggle as={Link} variant="link" to="#" id="dropdown-basic">
-              <img src={avatar1} className="img-radius wid-40" alt="User Profile" />
+              <img src={link} className="img-radius wid-40" alt="User Profile" />
             </Dropdown.Toggle>
             <Dropdown.Menu align="end" className="profile-notification">
               <div className="pro-head">
-                <img src={avatar4} className="img-radius" alt="User Profile" />
+                <img src={link} className="img-radius" alt="User Profile" />
                 <span>{username}</span>
                 <Link to="#" className="dud-logout" title="Logout">
                   <i className="feather icon-log-out" />
@@ -168,7 +176,10 @@ const NavRight = () => {
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item as="li" bsPrefix=" ">
-                  <Link to="#" className="dropdown-item">
+                  <Link to="#" onClick={(e) => { e.preventDefault();
+                     handleLogout();
+                      }}
+                      className="dropdown-item">
                     <i className="feather icon-log-out" /> Logout
                   </Link>
                 </ListGroup.Item>

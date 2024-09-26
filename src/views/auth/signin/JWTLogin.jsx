@@ -1,24 +1,42 @@
-import React,{useContext} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Row, Col, Alert, Button } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { UserContext } from 'contexts/context';
+import { useUser } from 'contexts/context';
+import axios from 'axios';
 
 const JWTLogin = () => {
   const navigate = useNavigate();
-  const { setUsername } = useContext(UserContext);
-  const details = [{Username:"Adithya441",email:"adithyachalumuri733@gmail.com",password:"123456"}];
-  const username = details[0].Username;
-  console.log(username);
+  const details = [{ Username: "Adithya441", email: "adithyachalumuri733@gmail.com", password: "123456" },{ Username: "Adithya", email: "adithyachalumuri@gmail.com", password: "12345678" },{ Username: "Adithya7890", email: "adithyachalumuri7@gmail.com", password: "123456987" }];
+  const [data,setData] = useState([{}]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("https://dummyjson.com/users");
+        
+        const fetchedData = response.data;
+
+        const transformeddata = fetchedData.users
+
+        setData(transformeddata);
+        
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); 
+  console.log(data[0].image);
+
 
   return (
-    <UserContext.Provider value={username}>
     <Formik
       initialValues={{
         email: '',
         password: '',
-        Username: '',
         submit: null,
       }}
       validationSchema={Yup.object().shape({
@@ -26,23 +44,31 @@ const JWTLogin = () => {
         password: Yup.string().max(255).required('Password is required'),
       })}
       onSubmit={(values, { setSubmitting, setErrors, resetForm }) => {
-        
-        if (
-          values.email === details[0].email &&
-          values.password === details[0].password
-        ) {
-          resetForm();
-          setUsername(details[0].Username);
-          navigate('/app/dashboard/analytics');
-        } else {
-          setErrors({ submit: 'Invalid credentials, please try again.' });
-        }
-        setSubmitting(false);
+        setSubmitting(true);
+
+        // Check if the email and password match
+        data.map((item)=>{
+          if (
+            values.email === item.email &&
+            values.password === item.password
+          ) {
+            setSubmitting(false);
+            navigate('/app/dashboard/analytics');
+            resetForm();
+            localStorage.setItem('username', item.firstName);
+            localStorage.setItem('link', item.image);
+          } else {
+            setErrors({ submit: 'Invalid credentials, please try again.' });
+            setSubmitting(false);
+          }
+
+        })
       }}
     >
       {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
         <form noValidate onSubmit={handleSubmit}>
-          <div className="form-group mb-3">
+          <div className="form-group mb-3" style={{ marginTop: '20px' }}>
+            <label>Enter your E-Mail</label>
             <input
               className="form-control"
               label="Email Address / Username"
@@ -55,6 +81,7 @@ const JWTLogin = () => {
             {touched.email && errors.email && <small className="text-danger form-text">{errors.email}</small>}
           </div>
           <div className="form-group mb-4">
+            <label>Enter your Password</label>
             <input
               className="form-control"
               label="Password"
@@ -97,7 +124,6 @@ const JWTLogin = () => {
         </form>
       )}
     </Formik>
-    </UserContext.Provider>
   );
 };
 

@@ -34,6 +34,14 @@ const BarChartWithModal = () => {
       xaxis: {
         categories: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5']  // Categories for the bars
       },
+      grid: {
+        padding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        }
+      },
       plotOptions: {
         bar: {
           horizontal: false
@@ -52,7 +60,7 @@ const BarChartWithModal = () => {
       />
 
       {/* Modal for showing the detailed data */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered size='xl' style={{width:'900px', marginLeft:'280px'}}>
         <Modal.Header closeButton>
           <Modal.Title>Details for {selectedData?.label}</Modal.Title>
         </Modal.Header>

@@ -2,6 +2,11 @@ const chartData = {
   height: 150,
   type: 'donut',
   options: {
+    chart: {
+      toolbar: {
+        show: true,  // Enable toolbar with download options
+      }
+    },
     dataLabels: {
       enabled: false
     },
@@ -27,7 +32,8 @@ const chartData = {
         left: 0
       }
     },
-    colors: ['#ffffff99', '#2ed8b6'],
+    // Custom color combination for the chart
+    colors: ['#FF5733', '#33FF57', '#3357FF', '#FFD700', '#FF33A1'], // Array of colors
     fill: {
       opacity: [1, 1]
     },
@@ -35,6 +41,7 @@ const chartData = {
       width: 0
     }
   },
-  series: [20, 15]
+  series: [20, 15]  // Data for the donut chart
 };
+
 export default chartData;

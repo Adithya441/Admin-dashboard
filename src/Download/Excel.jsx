@@ -1,13 +1,13 @@
 import * as XLSX from "xlsx";
 
-export const exportDataToExcel = (data, title) => {
+export const exportDataToExcel = (data,title) => {
   const workbook = XLSX.utils.book_new();
 
   const worksheetData = [
     [title], 
     [],      
     ["Devices", "Value"], 
-    ...data.map(item => [item.devices, item.value]),
+    ...data.map(item => [item.label, item.value]),
   ];
   const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
   const maxLengths = worksheetData.reduce((acc, row) => {

@@ -28,20 +28,14 @@ const Signin1 = () => {
             <span className="r s" />
             <span className="r" />
           </div>
-          <Card className="borderless text-center">
+          <Card className="borderless text-center" style={{backgroundColor:'aqua'}}>
             <Card.Body>
-              <img src={logoDark} alt="" className="img-fluid mb-4" />
+            <img id="main-logo" src='https://fluentgrid.com/wp-content/uploads/2019/09/Fluentgrid-logo-white.png' alt="" className="logo" style={{ width: '200px', height: '75px' }} />
               <AuthLogin />
               <p className="mb-2 text-muted">
                 Forgot password?{' '}
                 <NavLink to="/auth/reset-password-1" className="f-w-400">
                   Reset
-                </NavLink>
-              </p>
-              <p className="mb-0 text-muted">
-                Don’t have an account?{' '}
-                <NavLink to="/auth/signup-1" className="f-w-400">
-                  Signup
                 </NavLink>
               </p>
             </Card.Body>

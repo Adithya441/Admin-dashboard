@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { UserContext } from 'contexts/context';
 // project-import
 import renderRoutes, { routes } from './routes';
+import { UserProvider } from 'contexts/context';
 
 // ==============================|| APP ||============================== //
 
 const App = () => {
-  const [username, setUsername] = useState('null');
   return (
   <BrowserRouter basename={import.meta.env.VITE_APP_BASE_NAME}>
-    <UserContext.Provider value={{ username, setUsername }}>
+    <UserProvider>
     {renderRoutes(routes)}
-    </UserContext.Provider>
+    </UserProvider>
   </BrowserRouter>
   
   );

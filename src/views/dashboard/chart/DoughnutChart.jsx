@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { Modal, Button } from 'react-bootstrap';
 import { DataTable } from 'primereact/datatable';
@@ -9,12 +9,38 @@ import { Column } from 'primereact/column';
 import 'primereact/resources/themes/saga-blue/theme.css';  // Or any theme you like
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css'; // For icons
+import { useUser } from 'contexts/context';
+import { exportDataToCSV } from 'Download/Csv';
+import { exportDataToExcel } from 'Download/Excel';
 
 
 
 const DonutChartWithModal = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedData, setSelectedData] = useState([]);
+    const {option} = useUser();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedData, setSelectedData] = useState([]);
+    const [label, setLabel] = useState([]);
+    const [serie, setSerie] = useState([]);
+    const [selectedoption, setSelectedoption] = useState('');
+
+    useEffect(()=>{
+        if(option === 'all'){
+            setLabel(['Communicated', 'Never Communicated', 'Not Communicated']);
+            setSerie([85, 12, 8]);
+        }
+        else if(option === 'comu'){
+            setLabel(['Communicated']);
+            setSerie([85]);
+        }
+        else if(option === 'notcomu'){
+            setLabel(['Not Communicated']);
+            setSerie([8]);
+        }
+        else if(option === 'nevercomu'){
+            setLabel(['Never Communicated']);
+            setSerie([12]);
+        }
+    },[option]);
 
   const handleDataClick = (dataIndex) => {
     const labels = ['Communicated', 'Never Communicated', 'Not Communicated'];
@@ -26,8 +52,34 @@ const DonutChartWithModal = () => {
       label: clickedLabel,
       value: clickedValue
     }]);
+    
 
     setIsModalOpen(true);
+  };
+  const handleschange = (e) => {
+    const value = e.target.value;
+    handleexport(value);
+    setSelectedoption(value);
+    setTimeout(() => {
+      setSelectedoption('');
+    }, 1000);
+  };
+
+  const handleexport = (format) => {
+    const title = selectedData[0].label;
+    switch (format) {
+      case 'pdf':
+        convert();
+        break;
+      case 'csv':
+        exportDataToCSV(selectedData,title);
+        break;
+      case 'excel':
+        exportDataToExcel(selectedData,title);
+        break;
+      default:
+        break;
+    }
   };
 
   const chartData = {
@@ -36,9 +88,11 @@ const DonutChartWithModal = () => {
     options: {
       dataLabels: {
         enabled: true,
-        formatter: function (val) {
-          return `${val.toFixed(2)}%`;
-        }
+        formatter: function (val, opts) {
+            // Access the value from the series for the current data point
+            const actualValue = opts.w.config.series[opts.seriesIndex];
+            return actualValue;  // Display the actual value
+          }
       },
       plotOptions: {
         pie: {
@@ -47,7 +101,7 @@ const DonutChartWithModal = () => {
           }
         }
       },
-      labels: ['Communicated', 'Never Communicated', 'Not Communicated'],
+      labels: label,
       legend: {
         show: true
       },
@@ -56,9 +110,9 @@ const DonutChartWithModal = () => {
       },
       grid: {
         padding: {
-          top: 20,
+          top: 0,
           right: 0,
-          bottom: 10,
+          bottom: 0,
           left: 0
         }
       },
@@ -77,7 +131,7 @@ const DonutChartWithModal = () => {
         }
       }
     },
-    series: [85, 12, 8]
+    series: serie
   };
 
   return (
@@ -85,9 +139,15 @@ const DonutChartWithModal = () => {
       <Chart options={chartData.options} series={chartData.series} type={chartData.type} height={chartData.height} />
 
       {/* Modal for displaying clicked data */}
-      <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)}>
+      <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} centered size='xl' style={{width:'900px', marginLeft:'280px'}}>
         <Modal.Header closeButton>
-          <Modal.Title>Clicked Data</Modal.Title>
+          <Modal.Title style={{marginRight:'350px'}}> Meters</Modal.Title>
+          <select style={{ width: '70px', height: '30px', fontSize: '12px' }} onChange={handleschange} value={selectedoption}>
+                <option value='All'>Export</option>
+                <option value='pdf'>PDF</option>
+                <option value='csv'>CSV</option>
+                <option value='excel'>EXCEL</option>
+              </select>
         </Modal.Header>
         <Modal.Body>
           {selectedData && (

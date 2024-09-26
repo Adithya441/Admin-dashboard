@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './indexright.css'
 
 // project import
 import NavLeft from './NavLeft';
@@ -48,7 +47,7 @@ const NavBar = () => {
           <span />
         </Link>
         <Link to="#" className="b-brand">
-          <p className='rainbow-text'>FluentGrid</p>
+          <img id="main-logo" src='https://fluentgrid.com/wp-content/uploads/2019/09/Fluentgrid-logo-white.png' alt="" className="logo" style={{ width: '170px', height: '50px', marginTop:'-6px' }} />
         </Link>
         <Link to="#" className={moreClass.join(' ')} onClick={() => setMoreToggle(!moreToggle)}>
           <i className="feather icon-more-vertical" />

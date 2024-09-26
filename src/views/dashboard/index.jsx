@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState, useContext } from 'react';
 
 // react-bootstrap
@@ -28,12 +28,23 @@ import imgGrid3 from '../../assets/images/gallery-grid/img-grd-gal-3.jpg';
 import { convert } from 'Download/PDF';
 import { convert_png } from 'Download/Png';
 import { exportDataToExcel } from 'Download/Excel';
+import { useUser } from 'contexts/context';
+
+import { Apicall1 } from 'API/apicall1';
 
 // ==============================|| DASHBOARD ANALYTICS ||============================== //
 
 const DashAnalytics = () => {
+  
+  const {setOption} = useUser();
   const [selectoption, setSelectoption] = useState('All');
   const [selectedoption, setSelectedoption] = useState('');
+  const data1 = parseInt(localStorage.getItem('data1')) || 0;
+  const data2 = parseInt(localStorage.getItem('data2')) || 0;
+  const data3 = parseInt(localStorage.getItem('data3')) || 0;
+  const data4 = parseInt(localStorage.getItem('data4')) || 0;
+
+
 
   const handleschange = (e) => {
     const value = e.target.value;
@@ -46,6 +57,7 @@ const DashAnalytics = () => {
   const handlechange = (e) => {
     const value = e.target.value;
     setSelectoption(value);
+    setOption(value);
   };
 
   const data = [{devices:"Communicated",value:85},{devices:"Not Communicated",value:12},{devices:"Never Communicated",value:8}];
@@ -77,7 +89,7 @@ const DashAnalytics = () => {
               title: 'Meter Count',
               class: 'bg-c-blue',
               icon: 'feather icon-shopping-cart',
-              primaryText: '680'
+              primaryText: `${data1}`
             }}
           />
         </Col>
@@ -87,7 +99,7 @@ const DashAnalytics = () => {
               title: 'Active Meters',
               class: 'bg-c-green',
               icon: 'feather icon-tag',
-              primaryText: '450'
+              primaryText: `${data3}`
             }}
           />
         </Col>
@@ -97,7 +109,7 @@ const DashAnalytics = () => {
               title: 'De-Active Meters',
               class: 'bg-c-yellow',
               icon: 'feather icon-repeat',
-              primaryText: '3500'
+              primaryText: `${data4}`
             }}
           />
         </Col>
@@ -107,13 +119,13 @@ const DashAnalytics = () => {
               title: 'Today Active',
               class: 'bg-c-red',
               icon: 'feather icon-award',
-              primaryText: '500'
+              primaryText: `${data2}`
             }}
           />
         </Col>
 
-        <Col md={12} xl={6}>
-          <Card>
+        <Col md={12} xl={6} className="d-flex">
+          <Card className="w-100 h-80">
             <Card.Header>
               <h5>Communication Status</h5>
               <select style={{ width: '70px', height: '30px', fontSize: '12px', marginRight:'20px', marginLeft:'60px' }} onChange={handlechange} value={selectoption}>
@@ -139,15 +151,15 @@ const DashAnalytics = () => {
         </Col>
         <Col md={12} xl={6}>
           <Row>
-            <Col sm={6}>
-              <Card>
+            <Col sm={6} className="d-flex">
+              <Card className="w-100 h-80">
                 <Card.Body>
                   <BarChartWithModal/>
                 </Card.Body>
               </Card>
             </Col>
-            <Col sm={6}>
-              <Card className="bg-primary text-white">
+            <Col sm={6} className="d-flex">
+              <Card className="bg-primary text-black w-100 h-80">
                 <Card.Body>
                   <Row>
                     <Col sm="auto">
@@ -182,31 +194,6 @@ const DashAnalytics = () => {
               </Card>
             </Col>
           </Row>
-        </Col>
-
-        <Col lg={4} md={12}>
-          <SocialCard
-            params={{
-              icon: 'fa fa-envelope-open',
-              class: 'blue',
-              variant: 'primary',
-              primaryTitle: '8.62k',
-              primaryText: 'Subscribers',
-              secondaryText: 'Your main list is growing',
-              label: 'Manage List'
-            }}
-          />
-          <SocialCard
-            params={{
-              icon: 'fab fa-twitter',
-              class: 'green',
-              variant: 'success',
-              primaryTitle: '+40',
-              primaryText: 'Followers',
-              secondaryText: 'Your main list is growing',
-              label: 'Check them out'
-            }}
-          />
         </Col>
         <Col lg={8} md={12}>
           

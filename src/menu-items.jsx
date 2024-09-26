@@ -2,16 +2,36 @@ const menuItems = {
   items: [
     {
       id: 'navigation',
-      title: 'Navigation',
+      //title: 'Navigation',
       type: 'group',
       icon: 'icon-navigation',
       children: [
         {
           id: 'dashboard',
           title: 'Dashboard',
-          type: 'item',
+          type: 'collapse',
           icon: 'feather icon-home',
-          url: '/app/dashboard/analytics'
+          
+          children: [
+            {
+              id: 'dashboard',
+              title: 'Dashboard',
+              type: 'item',
+              url: '/app/dashboard/analytics',
+            },
+            {
+              id: 'communication',
+              title: 'Communication Status',
+              type: 'item',
+              //url: '/basic/badges'
+            },
+            {
+              id: 'dataavailability',
+              title: 'Data Availability',
+              type: 'item',
+              //url: '/basic/breadcrumb-pagination'
+            }
+          ]
         }
       ]
     },
@@ -23,45 +43,27 @@ const menuItems = {
       children: [
         {
           id: 'component',
-          title: 'Component',
+          title: 'Configuration',
           type: 'collapse',
           icon: 'feather icon-box',
           children: [
             {
-              id: 'button',
-              title: 'Button',
+              id: 'configuration1',
+              title: 'Configuration1',
               type: 'item',
-              url: '/basic/button'
+              //url: '/basic/button'
             },
             {
-              id: 'badges',
-              title: 'Badges',
+              id: 'configuration2',
+              title: 'Configuration2',
               type: 'item',
-              url: '/basic/badges'
+              //url: '/basic/badges'
             },
             {
-              id: 'breadcrumb-pagination',
-              title: 'Breadcrumb & Pagination',
+              id: 'configuration3',
+              title: 'Configuration3',
               type: 'item',
-              url: '/basic/breadcrumb-pagination'
-            },
-            {
-              id: 'collapse',
-              title: 'Collapse',
-              type: 'item',
-              url: '/basic/collapse'
-            },
-            {
-              id: 'typography',
-              title: 'Typography',
-              type: 'item',
-              url: '/basic/typography'
-            },
-            {
-              id: 'tooltip-popovers',
-              title: 'Tooltip & Popovers',
-              type: 'item',
-              url: '/basic/tooltip-popovers'
+              //url: '/basic/breadcrumb-pagination'
             }
           ]
         }
@@ -78,19 +80,19 @@ const menuItems = {
           title: 'Meter Details',
           type: 'collapse',
           icon: 'feather icon-home',
-          url: '/app/dashboard/analytics',
+          //url: '/app/dashboard/analytics',
           children: [
             {
               id: 'button',
               title: 'Button',
               type: 'item',
-              url: '/basic/button'
+              //url: '/basic/button'
             },
             {
               id: 'badges',
               title: 'Badges',
               type: 'item',
-              url: '/basic/badges'
+              //url: '/basic/badges'
             }
           ]
         }
@@ -112,15 +114,6 @@ const menuItems = {
           breadcrumbs: false
         },
         {
-          id: 'sign Up',
-          title: 'Register',
-          type: 'item',
-          icon: 'feather icon-log-in',
-          url: '/auth/signup-1',
-          target: true,
-          breadcrumbs: false
-        },
-        {
           id: 'reset-pass',
           title: 'Reset Password',
           type: 'item',
@@ -128,6 +121,32 @@ const menuItems = {
           url: '/auth/reset-password-1',
           target: true,
           breadcrumbs: false
+        }
+      ]
+    },
+    {
+      id: 'support',
+      title: 'Support',
+      type: 'group',
+      icon: 'icon-support',
+      children: [
+        {
+          id: 'sample-page',
+          title: 'Sample Page',
+          type: 'item',
+          //url: '/sample-page',
+          classes: 'nav-item',
+          icon: 'feather icon-sidebar'
+        },
+        {
+          id: 'documentation',
+          title: 'Documentation',
+          type: 'item',
+          icon: 'feather icon-help-circle',
+          classes: 'nav-item',
+          //url: 'https://codedthemes.gitbook.io/gradient-able-react/',
+          target: true,
+          external: true
         }
       ]
     }
