@@ -3,6 +3,7 @@ import { useState, useContext } from 'react';
 
 // react-bootstrap
 import { Row, Col, Card, Table, ListGroup } from 'react-bootstrap';
+import axios from 'axios';
 
 // third party
 import Chart from 'react-apexcharts';
@@ -30,8 +31,6 @@ import { convert_png } from 'Download/Png';
 import { exportDataToExcel } from 'Download/Excel';
 import { useUser } from 'contexts/context';
 
-import { Apicall1 } from 'API/apicall1';
-
 // ==============================|| DASHBOARD ANALYTICS ||============================== //
 
 const DashAnalytics = () => {
@@ -43,6 +42,48 @@ const DashAnalytics = () => {
   const data2 = parseInt(localStorage.getItem('data2')) || 0;
   const data3 = parseInt(localStorage.getItem('data3')) || 0;
   const data4 = parseInt(localStorage.getItem('data4')) || 0;
+  const [datao, setDatao] = useState(0);
+  const [dataa, setDataa] = useState(0);
+  const [datab, setDatab] = useState(0);
+  const [datac, setDatac] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("https://fakestoreapi.com/products");
+        const fetchedData = response.data;
+        let data1, data2, data3, data4;
+
+        fetchedData.forEach((item) => {
+          if (item.id === 1) {
+            data1 = item.rating.count;
+            setDatao(data1);
+            console.log(data1);
+            //localStorage.setItem("data1", data1);
+          } else if (item.id === 2) {
+            data2 = item.rating.count;
+            setDataa(data2);
+            //localStorage.setItem("data2", data2);
+          } else if (item.id === 3) {
+            data3 = item.rating.count;
+            setDatab(data3);
+            //localStorage.setItem("data3", data3);
+          } else if (item.id === 4) {
+            data4 = item.rating.count;
+            setDatac(data4);
+            //localStorage.setItem("data4", data4);
+          }
+        });
+
+        // Notify the parent component that data is fetched
+        //onDataFetch({ data1, data2, data3, data4 });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
 
 
@@ -89,7 +130,7 @@ const DashAnalytics = () => {
               title: 'Meter Count',
               class: 'bg-c-blue',
               icon: 'feather icon-shopping-cart',
-              primaryText: `${data1}`
+              primaryText: `${datao}`
             }}
           />
         </Col>
@@ -99,7 +140,7 @@ const DashAnalytics = () => {
               title: 'Active Meters',
               class: 'bg-c-green',
               icon: 'feather icon-tag',
-              primaryText: `${data3}`
+              primaryText: `${dataa}`
             }}
           />
         </Col>
@@ -109,7 +150,7 @@ const DashAnalytics = () => {
               title: 'De-Active Meters',
               class: 'bg-c-yellow',
               icon: 'feather icon-repeat',
-              primaryText: `${data4}`
+              primaryText: `${datab}`
             }}
           />
         </Col>
@@ -119,7 +160,7 @@ const DashAnalytics = () => {
               title: 'Today Active',
               class: 'bg-c-red',
               icon: 'feather icon-award',
-              primaryText: `${data2}`
+              primaryText: `${datac}`
             }}
           />
         </Col>
